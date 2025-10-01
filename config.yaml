@@ -6,7 +6,7 @@ main:
   experiment_name: development
   steps: all
 basic_cleaning:
-  input_artifact: "rbuerk9522-personal/nyc_airbnb/raw_data/sample.csv:latest"
+  input_artifact: "sample.csv:latest"
   output_artifact: "clean_sample.csv"
   output_type: "clean_data"
   output_description: "Data after removing outliers and invalid values"
