@@ -83,9 +83,9 @@ def go(config: DictConfig):
             'main',
             parameters = {
             "input": config["data_split"]["input"],
-            "test_size": config["data_split"]["test_size"],
-            "random_seed": config["data_split"]["random_seed"],
-            "stratify_by": config["data_split"]["stratify_by"],
+            "test_size": config["modeling"]["test_size"],
+            "random_seed": config["modeling"]["random_seed"],
+            "stratify_by": config["modeling"]["stratify_by"],
         }
     )
 
@@ -99,11 +99,21 @@ def go(config: DictConfig):
             # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
             # step
 
-            ##################
-            # Implement here #
-            ##################
-
-            pass
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(), "src", "train_random_forest"),
+                "main",
+                env_manager="conda",
+                parameters={
+                    "trainval_artifact": config["modeling"]["trainval_artifact"],
+                    "rf_config": rf_config,
+                    "stratify_by": config["modeling"]["stratify_by"],
+                    "random_seed": config["modeling"]["random_seed"],
+                    "val_size": config["modeling"]["val_size"],
+                    "max_tfidf_features": config["modeling"]["max_tfidf_features"],
+                    "output_artifact": config["modeling"]["output_artifact"],
+                    
+             },
+            )
 
         if "test_regression_model" in active_steps:
 

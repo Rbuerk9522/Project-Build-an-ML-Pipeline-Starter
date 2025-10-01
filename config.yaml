@@ -23,11 +23,15 @@ data_check:
   min_price: 10
   max_price: 350
 data_split:
+  # Input dataset.
   input: "clean_sample.csv:latest"
-  test_size: 0.2
-  random_seed: 42
-  stratify_by: "neighbourhood_group"
 modeling:
+  # Input artifact
+  trainval_artifact: "trainval_data.csv:latest"
+  # Test artifact.
+  test_artifact: "test_data.csv:latest"
+  # Path to the random forest configuration. This is a JSON file that will be passed
+  output_artifact: "random_forest_model"
   # Fraction of data to use for test (the remaining will be used for train and validation)
   test_size: 0.2
   # Fraction of remaining data to use for validation
