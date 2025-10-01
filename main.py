@@ -78,10 +78,16 @@ def go(config: DictConfig):
     )
 
         if "data_split" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+        f"{config['main']['components_repository']}/train_val_test_split",
+            'main',
+            parameters = {
+            "input": config["data_split"]["input"],
+            "test_size": config["data_split"]["test_size"],
+            "random_seed": config["data_split"]["random_seed"],
+            "stratify_by": config["data_split"]["stratify_by"],
+        }
+    )
 
         if "train_random_forest" in active_steps:
 
